@@ -1,12 +1,12 @@
-package configuration.watcher;
+package com.github.tonelloiago.localdrive.configuration.watcher;
 
-import org.jetbrains.annotations.NotNull;
+
 
 import java.lang.reflect.Method;
 
 public class WatcherUtils {
 
-    public static void runWatcher(@NotNull Object target) {
+    public static void runWatcher(Object target) {
         var cls = target.getClass();
         var annotation = cls.getAnnotation(Watcher.class);
         for(Method method : cls.getDeclaredMethods()) {
@@ -17,7 +17,7 @@ public class WatcherUtils {
         }
     }
 
-    private static Runnable getRunnable(@NotNull Object target, @NotNull Method method) {
+    private static Runnable getRunnable( Object target, Method method) {
         return () -> {
             try {
                 method.invoke(target);
