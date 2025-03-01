@@ -1,5 +1,12 @@
 # LocalDrive
 
+### Summary
+1. [Project Goal](#project-goal)
+2. [Key Concepts Studied](#key-concepts-studied)
+3. [Phase 1](#phase-1)
+4. [Parallel Topics](#parallel-topics)
+
+
 ### Project Goal
 
 The primary objective of this project is to explore and implement recent Java features, including virtual threads and records, alongside modern development and deployment practices. This includes utilizing GitHub Actions for CI/CD, Docker and Kubernetes for containerization and orchestration, integrating with third-party services, and examining concurrency in distributed systems.
