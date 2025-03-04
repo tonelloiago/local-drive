@@ -54,3 +54,7 @@ The initial idea of this project is described below:
     2. Create a virtual machine in GCP to run Sonarqube and analyze code quality.
     3. Integrate Github Actions workflow to VM created on item 2.
 
+
+### References 
+- Google Drive QuickStart: (https://developers.google.com/drive/api/quickstart/java)
+- Google Drive authentication with service account: (https://github.com/googleapis/google-api-java-client/blob/main/docs/oauth-2.0.md#service-accounts)
