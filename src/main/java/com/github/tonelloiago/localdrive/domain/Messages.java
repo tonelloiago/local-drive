@@ -1,4 +1,4 @@
-package com.github.tonelloiago.localdrive;
+package com.github.tonelloiago.localdrive.domain;
 
 public enum Messages {
 

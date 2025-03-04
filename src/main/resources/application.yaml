@@ -1,1 +1,2 @@
-basePath: /drive
+local-drive:
+  base-path: /drive
