@@ -1,5 +1,6 @@
 package com.github.tonelloiago.localdrive.configuration;
 
+import com.github.tonelloiago.localdrive.configuration.folder.LocalFolderConfiguration;
 import com.github.tonelloiago.localdrive.configuration.handler.FilesHandler;
 import com.github.tonelloiago.localdrive.exception.LocalDriveBaseException;
 import org.junit.jupiter.api.*;
@@ -18,17 +19,17 @@ import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class LocalDriveConfigurationTest {
+class LocalFolderConfigurationTest {
 
     @Mock
     FilesHandler filesHandler;
 
     @InjectMocks
-    LocalDriveConfiguration localDriveConfiguration;
+    LocalFolderConfiguration localFolderConfiguration;
 
     @BeforeEach
     void setUp() {
-        ReflectionTestUtils.setField(localDriveConfiguration, "basePath", "/test-drive");
+        ReflectionTestUtils.setField(localFolderConfiguration, "basePath", "/test-drive");
     }
 
     @AfterAll
@@ -43,7 +44,7 @@ class LocalDriveConfigurationTest {
         Mockito.doCallRealMethod().when(filesHandler).createDirectory(getPath());
         Mockito.when(filesHandler.exists(any())).thenReturn(false);
 
-        localDriveConfiguration.configureLocalFolder();
+        localFolderConfiguration.configureLocalFolder();
 
         Assertions.assertTrue(Files.exists(getPath()));
     }
@@ -53,14 +54,14 @@ class LocalDriveConfigurationTest {
     void shouldntCreateDirectoryIfExists() {
         Mockito.when(filesHandler.getHomeDirectory()).thenCallRealMethod();
         Mockito.when(filesHandler.exists(getPath())).thenCallRealMethod();
-        Assertions.assertDoesNotThrow(() -> localDriveConfiguration.configureLocalFolder());
+        Assertions.assertDoesNotThrow(() -> localFolderConfiguration.configureLocalFolder());
         Assertions.assertTrue(Files.exists(getPath()));
     }
 
     @Test
     void shouldThrowLocalDriveBaseExceptionIfAnErrorOccurs() {
         Mockito.when(filesHandler.getHomeDirectory()).thenThrow(new SecurityException());
-        Assertions.assertThrows(LocalDriveBaseException.class, () -> localDriveConfiguration.configureLocalFolder());
+        Assertions.assertThrows(LocalDriveBaseException.class, () -> localFolderConfiguration.configureLocalFolder());
     }
 
     private static Path getPath() {

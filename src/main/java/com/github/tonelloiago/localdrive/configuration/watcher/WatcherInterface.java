@@ -1,10 +1,12 @@
 package com.github.tonelloiago.localdrive.configuration.watcher;
 
+import com.github.tonelloiago.localdrive.domain.Event;
+
 public interface WatcherInterface {
 
     void watcher();
-    void createFile();
-    void deleteFile();
-    void updateFile();
+    Event createFile();
+    Event deleteFile();
+    Event updateFile();
 
 }

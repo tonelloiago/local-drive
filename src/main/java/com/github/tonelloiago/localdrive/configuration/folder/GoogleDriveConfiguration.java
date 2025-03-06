@@ -1,4 +1,4 @@
-package com.github.tonelloiago.localdrive.configuration;
+package com.github.tonelloiago.localdrive.configuration.folder;
 
 import com.github.tonelloiago.localdrive.exception.LocalDriveBaseException;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;

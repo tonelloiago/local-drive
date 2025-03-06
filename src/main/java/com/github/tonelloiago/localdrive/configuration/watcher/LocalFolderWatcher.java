@@ -1,7 +1,8 @@
 package com.github.tonelloiago.localdrive.configuration.watcher;
 
-import com.github.tonelloiago.localdrive.configuration.LocalDriveConfiguration;
+import com.github.tonelloiago.localdrive.configuration.folder.LocalFolderConfiguration;
 import com.github.tonelloiago.localdrive.configuration.watcher.annotation.Watcher;
+import com.github.tonelloiago.localdrive.domain.Event;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -20,7 +21,7 @@ public class LocalFolderWatcher implements WatcherInterface {
 
         try(var watchService = FileSystems.getDefault().newWatchService()) {
 
-            var folderPath = LocalDriveConfiguration.getLocalFolderPath();
+            var folderPath = LocalFolderConfiguration.getLocalFolderPath();
             folderPath.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
 
             while(true) {
@@ -31,6 +32,9 @@ public class LocalFolderWatcher implements WatcherInterface {
                     var filePath = folderPath.resolve((Path) event.context());
 
                     System.out.println("Event: " + kind + " on file: " + filePath );
+
+                    //TODO montar evento e publicar
+
                 }
 
                 key.reset();
@@ -42,17 +46,17 @@ public class LocalFolderWatcher implements WatcherInterface {
     }
 
     @Override
-    public void createFile() {
-
+    public Event createFile() {
+        return null;
     }
 
     @Override
-    public void deleteFile() {
-
+    public Event deleteFile() {
+        return null;
     }
 
     @Override
-    public void updateFile() {
-
+    public Event updateFile() {
+        return null;
     }
 }

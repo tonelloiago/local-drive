@@ -1,6 +1,7 @@
 package com.github.tonelloiago.localdrive.configuration.watcher;
 
 import com.github.tonelloiago.localdrive.configuration.watcher.annotation.Watcher;
+import com.github.tonelloiago.localdrive.domain.Event;
 
 @Watcher
 public class GoogleDriveWatcher implements WatcherInterface {
@@ -10,17 +11,17 @@ public class GoogleDriveWatcher implements WatcherInterface {
     }
 
     @Override
-    public void createFile() {
-
+    public Event createFile() {
+        return null;
     }
 
     @Override
-    public void deleteFile() {
-
+    public Event deleteFile() {
+        return null;
     }
 
     @Override
-    public void updateFile() {
-
+    public Event updateFile() {
+        return null;
     }
 }
