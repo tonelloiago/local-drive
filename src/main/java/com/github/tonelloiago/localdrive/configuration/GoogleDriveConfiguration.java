@@ -1,5 +1,6 @@
-package com.github.tonelloiago.localdrive.configuration.googledrive;
+package com.github.tonelloiago.localdrive.configuration;
 
+import com.github.tonelloiago.localdrive.exception.LocalDriveBaseException;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
@@ -8,10 +9,6 @@ import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.auth.oauth2.GoogleCredentials;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 //TODO add logger
 @Configuration
@@ -22,18 +19,11 @@ public class GoogleDriveConfiguration {
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
     @Bean
-    public Drive configureGoogleDrive() throws GeneralSecurityException, IOException {
+    public Drive configureGoogleDrive() {
 
-        try(var inputStream = GoogleDriveConfiguration.class.getResourceAsStream(CREDENTIALS_FILE_PATH);) {
-
-            var httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-
-            if(inputStream == null) {
-                throw new FileNotFoundException();
-            }
-
+        try(var inputStream = GoogleDriveConfiguration.class.getResourceAsStream(CREDENTIALS_FILE_PATH)) {
             var googleCredentials = GoogleCredentials.fromStream(inputStream);
-
+            var httpTransport = GoogleNetHttpTransport.newTrustedTransport();
             var requestInitializer = new HttpCredentialsAdapter(googleCredentials);
 
             return new Drive.Builder(httpTransport, JSON_FACTORY, requestInitializer)
@@ -41,7 +31,8 @@ public class GoogleDriveConfiguration {
                     .build();
 
         } catch (Exception e) {
-            throw e;
+            System.out.println("Add logger");
+            throw new LocalDriveBaseException();
         }
     }
 

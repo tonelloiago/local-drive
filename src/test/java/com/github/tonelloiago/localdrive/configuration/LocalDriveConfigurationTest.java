@@ -43,7 +43,7 @@ class LocalDriveConfigurationTest {
         Mockito.doCallRealMethod().when(filesHandler).createDirectory(getPath());
         Mockito.when(filesHandler.exists(any())).thenReturn(false);
 
-        localDriveConfiguration.configure();
+        localDriveConfiguration.configureLocalFolder();
 
         Assertions.assertTrue(Files.exists(getPath()));
     }
@@ -53,14 +53,14 @@ class LocalDriveConfigurationTest {
     void shouldntCreateDirectoryIfExists() {
         Mockito.when(filesHandler.getHomeDirectory()).thenCallRealMethod();
         Mockito.when(filesHandler.exists(getPath())).thenCallRealMethod();
-        Assertions.assertDoesNotThrow(() -> localDriveConfiguration.configure());
+        Assertions.assertDoesNotThrow(() -> localDriveConfiguration.configureLocalFolder());
         Assertions.assertTrue(Files.exists(getPath()));
     }
 
     @Test
     void shouldThrowLocalDriveBaseExceptionIfAnErrorOccurs() {
         Mockito.when(filesHandler.getHomeDirectory()).thenThrow(new SecurityException());
-        Assertions.assertThrows(LocalDriveBaseException.class, () -> localDriveConfiguration.configure());
+        Assertions.assertThrows(LocalDriveBaseException.class, () -> localDriveConfiguration.configureLocalFolder());
     }
 
     private static Path getPath() {
