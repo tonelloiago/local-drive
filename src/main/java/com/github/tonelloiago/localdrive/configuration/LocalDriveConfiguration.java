@@ -47,6 +47,10 @@ public class LocalDriveConfiguration {
         return localFolderPath;
     }
 
+    public static void createFile(Path path) {
+
+    }
+
     //TODO run tem que sair daqui
     @Bean
     @DependsOn({"configureLocalFolder", "configureGoogleDrive"})
