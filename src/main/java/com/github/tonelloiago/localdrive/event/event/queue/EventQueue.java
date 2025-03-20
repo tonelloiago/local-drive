@@ -1,15 +1,13 @@
 package com.github.tonelloiago.localdrive.event.event.queue;
 
 import com.github.tonelloiago.localdrive.domain.Event;
-import com.github.tonelloiago.localdrive.manager.annotation.EventManager;
-import org.springframework.scheduling.annotation.Scheduled;
+import com.github.tonelloiago.localdrive.manager.EventManager;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.SynchronousQueue;
 
-//https://www.baeldung.com/java-synchronous-queue
 @Component
 public class EventQueue {
 
@@ -18,19 +16,32 @@ public class EventQueue {
 
     public void publish(Event event) throws InterruptedException {
         if (event == null) return;
+        System.out.println("📨 Publicando evento: " + event);
         this.eventQueue.put(event);
     }
 
-    @Scheduled(fixedRate = 10000)
-    public Event consume() throws InterruptedException {
-        System.out.println("COnsumindo evento");
-        return this.eventQueue.peek();
+    public void consume() {
+        Thread.startVirtualThread(() -> {
+            try {
+                while (true) {
+                    var event = this.eventQueue.take();
+                    consumers.stream()
+                        .filter(consumer -> !event.publisher().equals(consumer.getClass()))
+                        .forEach(consumer ->
+                                {
+                                    System.out.println("📢 Evento entregue a: " + consumer.getClass().getSimpleName());
+                                    event.eventKind().getAction().accept(consumer);
+                                });
+                }
+            }catch (InterruptedException ex) {
+                System.out.println();
+            }
+        });
     }
 
     public void subscribeAll(List<EventManager> managers) {
         consumers.addAll(managers);
     }
-
 
     //TODO maybe a retry
 }

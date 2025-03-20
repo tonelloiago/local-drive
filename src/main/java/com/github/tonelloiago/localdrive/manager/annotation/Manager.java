@@ -1,4 +1,4 @@
-package com.github.tonelloiago.localdrive.manager;
+package com.github.tonelloiago.localdrive.manager.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

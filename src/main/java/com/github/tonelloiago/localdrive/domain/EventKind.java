@@ -1,6 +1,6 @@
 package com.github.tonelloiago.localdrive.domain;
 
-import com.github.tonelloiago.localdrive.manager.annotation.EventManager;
+import com.github.tonelloiago.localdrive.manager.EventManager;
 
 import java.util.function.Consumer;
 

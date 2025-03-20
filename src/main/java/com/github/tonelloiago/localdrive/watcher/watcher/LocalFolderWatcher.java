@@ -2,6 +2,7 @@ package com.github.tonelloiago.localdrive.watcher.watcher;
 
 import com.github.tonelloiago.localdrive.event.event.queue.EventQueue;
 import com.github.tonelloiago.localdrive.configuration.handler.FilesHandler;
+import com.github.tonelloiago.localdrive.manager.LocalFolderManager;
 import com.github.tonelloiago.localdrive.watcher.watcher.annotation.Watcher;
 import com.github.tonelloiago.localdrive.domain.Event;
 import com.github.tonelloiago.localdrive.domain.EventKind;
@@ -20,7 +21,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 
 @Watcher
 @Component
-public class LocalFolderWatcher implements WatcherInterface {
+public class LocalFolderWatcher implements WatcherInterface<Path> {
 
     @Autowired
     private EventQueue eventQueue;
@@ -43,7 +44,7 @@ public class LocalFolderWatcher implements WatcherInterface {
                     var filePath = folderPath.resolve((Path) event.context());
 
                     var eventKind = UnixAction.valueOf(kind.name()).getEventKind();
-                    eventQueue.publish(buildEventToPublish(eventKind, filePath));
+                    eventQueue.publish(buildEvent(eventKind, filePath));
                 }
 
                 key.reset();
@@ -54,11 +55,12 @@ public class LocalFolderWatcher implements WatcherInterface {
         }
     }
 
-    private Event buildEventToPublish(EventKind eventKind, Path filePath) throws IOException {
+    @Override
+    public Event buildEvent(EventKind eventKind, Path filePath) throws IOException {
         if (EventKind.CREATE.equals(eventKind)) {
-            return new Event(eventKind, "hash", null, filePath.getFileName().toString());
+            return new Event(eventKind, "hash", filesHandler.readFile(filePath), filePath.getFileName().toString(), LocalFolderManager.class);
         }
 
-        return new Event(eventKind, "hash", filesHandler.readFile(filePath), filePath.getFileName().toString());
+        return new Event(eventKind, "hash", null, filePath.getFileName().toString(), LocalFolderManager.class);
     }
 }

@@ -1,6 +1,6 @@
 package com.github.tonelloiago.localdrive.domain;
 
-public record Event(EventKind eventKind, String hash, byte[] content, String name) {
+public record Event(EventKind eventKind, String hash, byte[] content, String name, Class publisher) {
 
     public EventKind eventKind() {
         return eventKind;

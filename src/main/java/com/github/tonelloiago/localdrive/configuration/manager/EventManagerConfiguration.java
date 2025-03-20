@@ -1,16 +1,15 @@
-package com.github.tonelloiago.localdrive.manager.annotation;
+package com.github.tonelloiago.localdrive.configuration.manager;
 
 import com.github.tonelloiago.localdrive.event.event.queue.EventQueue;
-import com.github.tonelloiago.localdrive.manager.Manager;
+import com.github.tonelloiago.localdrive.manager.EventManager;
+import com.github.tonelloiago.localdrive.manager.annotation.Manager;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
-
 @Configuration
-public class EventManagerUtils {
+public class EventManagerConfiguration {
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -26,6 +25,7 @@ public class EventManagerUtils {
                 .map(bean -> (EventManager) bean)
                 .toList();
         eventQueue.subscribeAll(managers);
+        eventQueue.consume();
     }
 
 }

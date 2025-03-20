@@ -20,7 +20,7 @@ public class LocalDriveConfiguration {
     @Bean
     public ApplicationRunner runAfterStartup() {
         return args -> {
-            new Thread(() -> {
+            Thread.startVirtualThread(() -> {
                 WatcherUtils.runWatchers(localFolderWatcher, googleDriveWatcher);
             }).start();
         };
