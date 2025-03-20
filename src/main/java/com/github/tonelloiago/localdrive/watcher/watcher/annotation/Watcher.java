@@ -1,4 +1,4 @@
-package com.github.tonelloiago.localdrive.configuration.watcher.annotation;
+package com.github.tonelloiago.localdrive.watcher.watcher.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
