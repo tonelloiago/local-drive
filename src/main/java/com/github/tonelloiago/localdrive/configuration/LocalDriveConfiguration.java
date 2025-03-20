@@ -1,35 +1,29 @@
 package com.github.tonelloiago.localdrive.configuration;
 
-import com.github.tonelloiago.localdrive.exception.LocalDriveBaseException;
+import com.github.tonelloiago.localdrive.watcher.watcher.GoogleDriveWatcher;
+import com.github.tonelloiago.localdrive.watcher.watcher.LocalFolderWatcher;
+import com.github.tonelloiago.localdrive.watcher.watcher.annotation.WatcherUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class LocalDriveConfiguration {
 
-    private final LocalDrive localDrive;
-    private final FilesHandler filesHandler;
+    @Autowired
+    private LocalFolderWatcher localFolderWatcher;
 
-    public LocalDriveConfiguration() {
-        this.localDrive = new LocalDrive();
-        this.filesHandler = new FilesHandler();
-        this.configureBaseFolder();
+    @Autowired
+    private GoogleDriveWatcher googleDriveWatcher;
+
+    @Bean
+    public ApplicationRunner runAfterStartup() {
+        return args -> {
+            Thread.startVirtualThread(() -> {
+                WatcherUtils.runWatchers(localFolderWatcher, googleDriveWatcher);
+            }).start();
+        };
     }
 
-    public LocalDrive getLocalDrive() {
-        return localDrive;
-    }
-
-    private void configureBaseFolder() {
-        try {
-            if(filesHandler.exists(this.localDrive.getBasePathAsPath())) {
-                return;
-            }
-            filesHandler.createDirectory(this.localDrive.getBasePathAsPath());
-        }catch (Exception e) {
-            System.err.println("ERROR: Cannot access directory specified in application.yaml");
-            throw new LocalDriveBaseException();
-        }
-    }
-
-    public void run() {
-
-    }
 }
