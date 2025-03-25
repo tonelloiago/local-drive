@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/8db4e9d6-37ad-45b9-9f93-f4f7a11922e2)# LocalDrive
+# LocalDrive
 
 ### Summary
 1. [Project Goal](#project-goal)
@@ -50,10 +50,11 @@ The initial idea of this project is described below:
 
 ### Phase 1.1
 Change in the system design - Creation of event queue to synchronize folders
-![image](https://github.com/user-attachments/assets/8fbe8544-3954-4448-b821-2846c8486a11)
+![image](https://github.com/user-attachments/assets/8db4e9d6-37ad-45b9-9f93-f4f7a11922e2)
 
-1.1 Watcher monitors a folder
-   1.2 When detects an action, it publish an event to event queue
+1.1 Watcher monitors a folder<br>
+1.2. When detects an action, it publish an event to event queue<br>
+<br>
 2. Consumer get the first message of the queue and take an action based on their content.
 
 
