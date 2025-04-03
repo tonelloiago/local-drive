@@ -1,5 +1,3 @@
-![image](https://github.com/user-attachments/assets/8db4e9d6-37ad-45b9-9f93-f4f7a11922e2)# LocalDrive
-
 ### Summary
 1. [Project Goal](#project-goal)
 2. [Key Concepts Studied](#key-concepts-studied)
